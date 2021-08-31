@@ -9,6 +9,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import com.lilcode.example.fabexample.databinding.ActivityMainBinding
 
@@ -16,6 +17,16 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
+    var actionOnClickListener: View.OnClickListener = View.OnClickListener { view ->
+        displayMessage("Action clicked")
+        Snackbar.make(view, "Action complete", Snackbar.LENGTH_LONG)
+            .setAction("My Action", null).show()
+    }
+
+    private fun displayMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,12 +43,8 @@ class MainActivity : AppCompatActivity() {
         binding.fab.setOnClickListener { view ->
             displayMessage("FAB Clicked")
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+                .setAction("My Action", actionOnClickListener).show()
         }
-    }
-
-    private fun displayMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
